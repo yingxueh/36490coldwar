@@ -2,35 +2,32 @@
 
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
-
-vocabulary = [line.strip() for line in open('names.txt').readlines()]
-# last names
-names = [words.split()[-1] for words in vocabulary]
-names = [name.lower() for name in names]
+import os
 
 
-def create_corpus(start, end):
+def create_corpus(files):
     # get each word
     documents = []
-    i = start
-    while (i < end+1):
-        file = "{}.txt".format(i)
-        corpus = open(file).read()
-        documents.append(corpus)
-        i += 1
+    for file in files:
+        text = open("./data_txts/"+file).read()
+        documents.append(text)
     return documents
 
 
 if __name__ == "__main__":
-    # set the file number to start from and end on
-    start = 29
-    end = 36
+    vocabulary = [line.strip() for line in open('names.txt').readlines()]
+    # last names
+    names = [words.split()[-1] for words in vocabulary]
+    names = [name.lower() for name in names]
+
+    # all files in data texts
+    files = os.listdir("./data_txts")
     
-    documents = create_corpus(start, end)
+    documents = create_corpus(files)
     vectorizer = CountVectorizer(min_df=1, vocabulary=names)
     words_matrix = vectorizer.fit_transform(documents)
     df = pd.DataFrame(data=words_matrix.todense(), 
-                    index=('document_%s' % (i+start) for i in range(words_matrix.shape[0])),
+                    index=(file for file in files),
                     columns=vectorizer.vocabulary_)
     df.index.name = 'id'
     df.to_csv('frequency.csv')
