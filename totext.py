@@ -4,6 +4,8 @@
 # pip3 install pdf2image
 # source /Users/suzannenie/.virtualenvs/venv/bin/activate
 
+#documents 20,22,25,31,32 illegible
+
 
 # Import libraries
 from PIL import Image, ImageEnhance
@@ -28,7 +30,7 @@ def generate_text(infile, outfile):
 
         img = Image.open(filename)
         gray = img.convert('L')
-        bw = gray.point(lambda x: 0 if x<170 else 255, '1')
+        bw = gray.point(lambda x: 0 if x<200 else 255, '1')
   
         # showing resultant image
         bw.show()
@@ -63,11 +65,13 @@ def generate_text(infile, outfile):
     f.close()
 
 if __name__ == "__main__":
-    i = 30
-    while (i < 31):
-        infile = "{}.pdf".format(i)
-        outfile = "{}.txt".format(i)
-        print(infile)
-        generate_text(infile, outfile)
-        print("done")
-        i += 1
+    # i = 30
+    # while (i < 31):
+    #     infile = "pdfs/{}.pdf".format(i)
+    #     outfile = "{}.txt".format(i)
+    #     print(infile)
+    #     generate_text(infile, outfile)
+    #     print("done")
+    #     i += 1
+    text = str(((pytesseract.image_to_string(Image.open("test.png")))))
+    print(text)
