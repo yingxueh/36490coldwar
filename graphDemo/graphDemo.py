@@ -12,8 +12,15 @@ class Network():
 
 	def populateNames(self):
 		# read in names.csv
-		# populate self.names with all the people
-		# for now, just set all entries as {alias : alias}
+		# populate self.names with all the people, where the key is their alias
+		# and the value is the primary key/ consistant value we'll use in our visualization
+		# Purpose: handles people that go by multiple names/ titles in the documents
+		# EXAMPLE:
+		# { John Doe : John Doe
+		#  Dwight Eisenhower : Dwight Eisenhower
+		#  Eisenhower : Dwight Eisenhower
+		#  Mr. President : Dwight Eisenhower
+		#  President Eisenhower : Dwight Eisenhower}
 		pass
 
 
