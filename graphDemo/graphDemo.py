@@ -31,9 +31,15 @@ class Network():
 		#              self.handleEdge(name1, name2)
 		pass
 
-	def grabNames(self, document : str) -> list:
+	def grabNames(self, freqs) -> list:
 		# fuzzy matching?
 		# return a list of all the names that appear in the document
+
+		# names = []
+		# for row in frequencies.csv:
+		# 	for col in row:
+		#       if df[row][col] > 1:
+		#           names.append(df[row][col].name (I forget the exact pandas syntax))
 		pass
 
 	def handleEdge(self, person1 : str, person2 : str):
