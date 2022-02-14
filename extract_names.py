@@ -5,18 +5,11 @@ from sklearn.feature_extraction.text import CountVectorizer
 import os
 
 
-def sort_names(filename):
+def getlastnames(filename):
     # alphabetical
-    newfilename = "sorted_names.txt"
-    file = open(filename)
-    newfile = open(newfilename, "w")
-    data=file.readlines()
-    s = set(data)
-    data=list(s)
-    data.sort()
-    for name in data:
-        newfile.write(name)
-    return newfilename
+    df = pd.read_csv(filename)
+    names = df['lastname'].dropna()
+    return names
         
 
 def create_corpus(files):
@@ -29,11 +22,8 @@ def create_corpus(files):
 
 
 if __name__ == "__main__":
-    newfilename = sort_names("names.txt")
-    vocabulary = [line.strip() for line in open(newfilename).readlines()]
-    # last names
-    names = [words.split()[-1] for words in vocabulary]
-    names = [name.lower() for name in names]
+    lastnames = getlastnames("names.csv")
+    names = [name.lower() for name in lastnames]
     names = set(names)
 
     # all files in data texts
