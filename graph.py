@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import pandas as pd
 
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
+
 def make_adjacency_matrix(M, names):
     n = len(names)
     print(M.shape, n)
@@ -43,7 +46,6 @@ def nx_graph_from_adjacency_matrix(M, names):
     plt.show()
     return G
 
-
 # makes bipartite graph from documents to people
 def nx_graph_from_biadjacency_matrix(M, txtfiles, names):
     print(M.shape)
@@ -54,8 +56,8 @@ def nx_graph_from_biadjacency_matrix(M, txtfiles, names):
 
     # Create the graph and add each set of nodes
     G = nx.Graph()
-    G.add_nodes_from(U, bipartite=0, nodetype="yellow")
-    G.add_nodes_from(V, bipartite=1, nodetype="green")
+    G.add_nodes_from(U, bipartite=0, nodetype="grey", nodesize=300, nodelabel=False)
+    G.add_nodes_from(V, bipartite=1, nodetype="blue", nodesize=50, nodelabel=True)
 
     # Find the non-zero indices in the biadjacency matrix to connect those nodes
     G.add_edges_from([ (U[i], V[j]) for i, j in zip(*M.nonzero()) ])
@@ -67,7 +69,24 @@ def nx_graph_from_biadjacency_matrix(M, txtfiles, names):
     
     # formatting
     colors = [u[1] for u in G.nodes(data="nodetype")]
-    nx.draw(G, font_size=5, node_size=7, with_labels=True, node_color = colors)
+    sizes = [u[1] for u in G.nodes(data="nodesize")]
+    labels = [u[1] for u in G.nodes(data="nodelabel")]
+    pos = nx.spring_layout(G, seed=101)
+    nx.draw(G, pos=pos, node_size = sizes, with_labels=False, node_color = colors, edgecolors='black')
+
+    print(pos)
+    textPos = pos.copy()
+    for k in textPos:
+        textPos[k][1] -= .035
+        pass
+
+    labels = {}    
+    for node in G.nodes():
+        if ".txt" not in node:
+            #set the node name as the key and the label as its value 
+            labels[node] = node
+    nx.draw_networkx_labels(G, textPos, labels, font_size=8, font_family="arial")
+
     plt.show()
     return G
 
@@ -84,5 +103,8 @@ if __name__ == "__main__":
     # nx_graph_from_biadjacency_matrix(mydata, txtfiles, names)
 
     A = make_adjacency_matrix(mydata, names)
-    nx_graph_from_adjacency_matrix(A, names)
+    #nx_graph_from_adjacency_matrix(A, names)
+    nx_graph_from_biadjacency_matrix(mydata, txtfiles, names)
+
+
 
