@@ -3,16 +3,26 @@ import numpy as np
 import matplotlib.pyplot as plt
 import networkx as nx
 import pandas as pd
+import sys
 
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
+np.set_printoptions(threshold=sys.maxsize)
+
+def getfreqmatrix(filename):
+    df = pd.read_csv(filename)
+    names = list(df.columns)[1:]
+    rownames = list(df["id"])  
+    mydata = genfromtxt(filename, delimiter=',')
+    mydata = mydata[1:,1:]
+    return (names, rownames, mydata)
+
 
 # M is a frequency matrix rows=documents, columns=names
 def make_adjacency_matrix(M, names):
     n = len(names)
-    print(M.shape, n)
+    print("docs by names", M.shape, n)
     A = np.zeros(n * n).reshape((n,n))
-    print(A.shape)
     for doc in M:
         for i in range(n):
             if doc[i] != 0:
@@ -23,7 +33,7 @@ def make_adjacency_matrix(M, names):
     return A
 
 # graph from adjacency matrix names by names
-def nx_graph_from_adjacency_matrix(M, names):
+def nx_graph_from_adjacency_matrix(M, names, df):
     V = names
 
     # Create the graph and add each set of nodes
@@ -46,7 +56,6 @@ def nx_graph_from_adjacency_matrix(M, names):
             s = n[0].upper() + n[1:]
             labels[n] = s
 
-    df = pd.read_csv("names.csv")
     colors = []
     for n in G:
         r = df.loc[df["lastname"].str.lower() == n]
@@ -129,16 +138,27 @@ def nx_graph_from_biadjacency_matrix(M, txtfiles, names):
     return G
 
 
+# given two graphs, returns jaccard index
+def get_jaccard_index(G, H):
+    A = set(G.edges)
+    B = set(H.edges)
+    n11 = A.intersection(B)
+    n01 = A.difference(B)
+    n10 = B.difference(A)
+    return len(n11) / (len(n11) + len(n01) + len(n10))
+
+
 if __name__ == "__main__":
-    filename = 'frequency.csv'
-    df = pd.read_csv(filename)
-    mydata = genfromtxt(filename, delimiter=',')
-    mydata = mydata[1:,1:]
+    (names, txtfiles, mydata) = getfreqmatrix("frequency.csv")
 
-    names = list(df.columns)[1:]
-    txtfiles = list(df["id"])
-
+    namesdf = pd.read_csv("names.csv")
+    A = make_adjacency_matrix(mydata, names)
+    G = nx_graph_from_adjacency_matrix(A, names, namesdf)
     # nx_graph_from_biadjacency_matrix(mydata, txtfiles, names)
 
-    A = make_adjacency_matrix(mydata, names)
-    G = nx_graph_from_adjacency_matrix(A, names)
+    (names, ids, basedata) = getfreqmatrix("baseline/baseline_frequency.csv")
+    basemat = make_adjacency_matrix(basedata, names)
+    baseG = nx_graph_from_adjacency_matrix(basemat, names, namesdf)
+
+    J = get_jaccard_index(G, baseG)
+    print("Jaccard index: ", J)
