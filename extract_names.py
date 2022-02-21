@@ -9,6 +9,8 @@ def getlastnames(filename):
     # alphabetical
     df = pd.read_csv(filename)
     names = df['lastname'].dropna()
+    names = [name.lower() for name in names]
+    names = set(names)
     return names
         
 
@@ -20,20 +22,21 @@ def create_corpus(files):
         documents.append(text)
     return documents
 
-
-if __name__ == "__main__":
-    lastnames = getlastnames("names.csv")
-    names = [name.lower() for name in lastnames]
-    names = set(names)
-
-    # all files in data texts
-    files = os.listdir("./data_txts")
-    
-    documents = create_corpus(files)
+def write_csv(csv, names, documents):
     vectorizer = CountVectorizer(min_df=1, vocabulary=names)
     words_matrix = vectorizer.fit_transform(documents)
     df = pd.DataFrame(data=words_matrix.todense(), 
-                    index=(file for file in files),
+                    index=(i for i in range(len(documents))),
                     columns=vectorizer.vocabulary_)
     df.index.name = 'id'
-    df.to_csv('frequency.csv')
+    df.to_csv(csv)
+
+
+if __name__ == "__main__":
+    names = getlastnames("names.csv")
+
+    # all files in data texts
+    files = os.listdir("./data_txts")
+    documents = create_corpus(files)
+
+    write_csv("frequency.csv", names, documents)

@@ -7,11 +7,11 @@ import pandas as pd
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 
+# M is a frequency matrix rows=documents, columns=names
 def make_adjacency_matrix(M, names):
     n = len(names)
     print(M.shape, n)
-    A = np.zeros(n * n)
-    A = A.reshape((n,n))
+    A = np.zeros(n * n).reshape((n,n))
     print(A.shape)
     for doc in M:
         for i in range(n):
@@ -20,10 +20,9 @@ def make_adjacency_matrix(M, names):
                     if doc[j] != 0:
                         A[i][j] += 1
                         A[j][i] += 1
-    print(A)
     return A
 
-
+# graph from adjacency matrix names by names
 def nx_graph_from_adjacency_matrix(M, names):
     print(M.shape)
     V = names
@@ -103,8 +102,8 @@ if __name__ == "__main__":
     # nx_graph_from_biadjacency_matrix(mydata, txtfiles, names)
 
     A = make_adjacency_matrix(mydata, names)
-    #nx_graph_from_adjacency_matrix(A, names)
-    nx_graph_from_biadjacency_matrix(mydata, txtfiles, names)
+    G = nx_graph_from_adjacency_matrix(A, names)
+
 
 
 
