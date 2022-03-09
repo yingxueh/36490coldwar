@@ -16,11 +16,11 @@ def getlastnames(filename):
 
 def create_corpus(files):
     # get each word
-    documents = []
+    doc_text = []
     for file in files:
         text = open("./data_txts/"+file).read()
-        documents.append(text)
-    return documents
+        doc_text.append(text)
+    return doc_text
 
 def write_csv(csv, names, documents):
     vectorizer = CountVectorizer(min_df=1, vocabulary=names)

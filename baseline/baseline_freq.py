@@ -5,7 +5,7 @@ import pandas as pd
 import sys
 sys.path.insert(0, '..')
 from graph import *
-from extract_names import *
+from frequency import *
 
 
 import warnings
@@ -17,7 +17,6 @@ def getdata(filename):
     file = open(filename, 'r')
     for line in file.readlines():
         docs.append(line)
-    print(docs)
     return docs
 
 

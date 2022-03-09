@@ -138,6 +138,12 @@ def nx_graph_from_biadjacency_matrix(M, txtfiles, names):
     return G
 
 
+# given set of edges, print them nicely
+def format_edges(edges):
+    for edge in list(edges):
+        (n1, n2) = edge
+        print(n1 + "->" + n2)
+
 # given two graphs, returns jaccard index
 def get_jaccard_index(G, H):
     A = set(G.edges)
@@ -145,9 +151,12 @@ def get_jaccard_index(G, H):
     n11 = A.intersection(B)   
     n10 = A.difference(B)
     n01 = B.difference(A)
-    print("intersection", n11)
-    print("\n in G, not in base, length", len(n10), n10)
-    print("\n in base, not in G, length", len(n01), n01)
+    print("Intersection")
+    format_edges(n11)
+    print("\n In our graph, not in baseline, length:", len(n10))
+    format_edges(n10)
+    print("\n In baseline, not in our Graph, length:", len(n01))
+    format_edges(n01)
     return len(n11) / (len(n11) + len(n01) + len(n10))
 
 
