@@ -25,7 +25,7 @@ def base_freq(csv, names):
     write_csv(csv, names, documents)
 
 if __name__ == "__main__":
-    csv = "baseline_frequency1.csv"
+    csv = "baseline_frequency.csv"
     names = getlastnames("../names.csv")
     base_freq(csv, names)
     

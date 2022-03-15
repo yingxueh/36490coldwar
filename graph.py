@@ -151,7 +151,7 @@ def get_jaccard_index(G, H):
     n11 = A.intersection(B)   
     n10 = A.difference(B)
     n01 = B.difference(A)
-    print("Intersection")
+    print("Intersection, length: ", len(n11))
     format_edges(n11)
     print("\n In our graph, not in baseline, length:", len(n10))
     format_edges(n10)
