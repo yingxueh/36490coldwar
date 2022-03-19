@@ -10,7 +10,7 @@ def get_num_nodes(G):
 	return G.number_of_nodes()
 
 def get_num_edges(G):
-	return G.numnber_of_edges()
+	return G.number_of_edges()
 
 def get_degree_distribution(G):
 	"""
