@@ -28,17 +28,17 @@ def generate_text(infile, outfile):
         # Save the image of the page in system
         page.save(filename, 'JPEG')
 
-        img = Image.open(filename)
-        gray = img.convert('L')
-        bw = gray.point(lambda x: 0 if x<200 else 255, '1')
+        # img = Image.open(filename)
+        # gray = img.convert('L')
+        # bw = gray.point(lambda x: 0 if x<200 else 255, '1')
   
         # showing resultant image
-        bw.show()
+        # bw.show()
 
         # img_contr_obj=ImageEnhance.Contrast(img)
         # # increase contrast
         # e_img=img_contr_obj.enhance(5)
-        bw.save(filename)
+        # bw.save(filename)
     
         # Increment the counter to update filename
         image_counter = image_counter + 1
@@ -65,13 +65,11 @@ def generate_text(infile, outfile):
     f.close()
 
 if __name__ == "__main__":
-    # i = 30
-    # while (i < 31):
-    #     infile = "pdfs/{}.pdf".format(i)
-    #     outfile = "{}.txt".format(i)
-    #     print(infile)
-    #     generate_text(infile, outfile)
-    #     print("done")
-    #     i += 1
-    text = str(((pytesseract.image_to_string(Image.open("test.png")))))
-    print(text)
+    i = 40
+    while (i < 42):
+        infile = "pdfs/{}.pdf".format(i)
+        outfile = "data_txts/{}.txt".format(i)
+        print("start", infile)
+        generate_text(infile, outfile)
+        print("done", outfile)
+        i += 1
