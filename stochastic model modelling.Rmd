@@ -17,16 +17,14 @@ theme_set(theme_bw())
 
 ```{r}
 baseline_frequency = read.csv("baseline_frequency.csv")
-#baseline_frequency[1,1]
+
 str(baseline_frequency, max.level = 1) 
 ```
 row 4 15 17 18 22 27 29 32 34 35 38 41 46 47 48 56 58 are exempted
 ```{r}
 rowSums = rowSums(baseline_frequency[2:109])
 ```
-
-
-We first consider the binary network where an edge is drawn between two trees when they do share a least one common fungi:
+We first consider the binary network where an edge is drawn between two persons when they do share a least one common network:
 ```{r}
 library(gtools)
 #binary person-person network matrix
@@ -113,7 +111,7 @@ coef(mySimpleSBM, 'connectivity')
 mySimpleSBM$storedModels %>% kable()
 ```
 
-We can then what models are competitive in terms of model selection by checking the ICL
+We can then see what models are competitive in terms of model selection by checking the ICL
 ```{r}
 mySimpleSBM$storedModels %>%  ggplot() + aes(x = nbBlocks, y = ICL)  + geom_line() + geom_point(alpha = 0.5)
 
