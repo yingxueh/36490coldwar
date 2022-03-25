@@ -1,0 +1,72 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+# Libraries
+
+# install.packages(igraph)
+# install.packages('statnet')
+
+library(tidyverse)
+library(igraph)    # For creating the network
+library(statnet)   # For ERGM
+```
+
+```{r}
+# Baseline dataset provided by the professor of which names appear in which document
+# ROWS: document
+# COLS: names
+#       - 1 : name appeared in document at that row
+#       - 0 : name did not appear in document at that row
+df <- read.csv('baseline/baseline_frequency.csv')
+
+# Removing id column, changing colnames to numbers (for indexing later on),
+# converting to matrix
+df <- df %>% select(-1) 
+colnames(df) <- 1:108
+mat <- as.matrix(df)
+
+# Loop for populating our adjacency matrix
+adj.mat <- matrix(0, ncol(mat), ncol(mat))
+for (doc in 1:nrow(mat)) {
+  for (i in 1:ncol(mat)) {
+    if (mat[doc, i] != 0) {
+      for (j in i+1:length(mat[doc,])) {
+        # R sucks and if i+1 == 109, the loop guard doesn't care and it will 
+        # just count backwards down to 108.
+        # So you need this extra if statement.
+        if (j < 109) {
+          if (mat[doc, j] != 0) {
+            adj.mat[i, j] <- 1
+            adj.mat[j, i] <- 1
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+```{r}
+n <- network(adj.mat, directed=FALSE)
+
+n
+list.vertex.attributes(n)
+```
+
+
+```{r}
+# NULL MODEL
+# Estimate the simplest model, one with only a term for tie density (akin to an intercept term in a glm)
+m1 = ergm(n ~ edges)
+summary(m1)
+```
+
+```{r}
+tmp = c(1:1000)
+for (i in 110:108) {
+  print(tmp[i])
+}
+```
