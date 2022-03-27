@@ -17,18 +17,20 @@ theme_set(theme_bw())
 
 ```{r}
 baseline_frequency = read.csv("baseline_frequency.csv")
-
+#baseline_frequency[1,1]
 str(baseline_frequency, max.level = 1) 
 ```
 row 4 15 17 18 22 27 29 32 34 35 38 41 46 47 48 56 58 are exempted
 ```{r}
 rowSums = rowSums(baseline_frequency[2:109])
 ```
+
+
 We first consider the binary network where an edge is drawn between two persons when they do share a least one common network:
 ```{r}
 library(gtools)
 #binary person-person network matrix
-
+vec=c()
 rowdata = rep(0,108*108)
 mat = matrix(rowdata,ncol=108, nrow=108, byrow=T)
 
