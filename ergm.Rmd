@@ -25,7 +25,6 @@ df <- read.csv('baseline/baseline_frequency.csv')
 # Removing id column, changing colnames to numbers (for indexing later on),
 # converting to matrix
 df <- df %>% select(-1) 
-colnames(df) <- 1:108
 mat <- as.matrix(df)
 
 # Loop for populating our adjacency matrix
@@ -50,23 +49,58 @@ for (doc in 1:nrow(mat)) {
 ```
 
 ```{r}
-n <- network(adj.mat, directed=FALSE)
-
-n
-list.vertex.attributes(n)
+# Set east vs. west attribute for each node
+names <- read.csv('names_copy.csv')
 ```
 
+```{r}
+n <- network(adj.mat, directed=FALSE)
+
+names.filtered <- names[!duplicated(names[,c('lastname')]),][1:108,]
+
+# # Checking that names are in same order in both vectors
+# tolower(names.filtered[,'lastname'])
+# network.vertex.names(n)
+# tolower(network.vertex.names(n)) == tolower(names.filtered[,'lastname'])
+
+names.filtered[,'affiliation']
+
+n%v%'vertex.names'<- colnames(df)
+n%v%'affiliation'<- names.filtered[,'affiliation']
+# network.vertex.names(n)
+# plot(n)
+```
+
+## Model 1: Null model
 
 ```{r}
 # NULL MODEL
 # Estimate the simplest model, one with only a term for tie density (akin to an intercept term in a glm)
-m1 = ergm(n ~ edges)
-summary(m1)
+null.model = ergm(n ~ edges)
+summary(null.model)
 ```
 
+The conditional log-odds of two actors having a tie, keeping the rest of the network fixed, is -2.9332 * change in the number of ties.
+
+## Model 2: Triad Model
+
+Let’s add a term often thought to be a measure of “clustering”: the number of completed triangles in the network.
+
 ```{r}
-tmp = c(1:1000)
-for (i in 110:108) {
-  print(tmp[i])
-}
+## TAKES FOREVER TO RUN, HAVE NO CLUE WHAT THE STATS FOR THIS ONE ARE
+model.1 <- ergm(n ~ edges + triangle)
+summary(model.1)
 ```
+
+## Model 3: Affiliation (East vs. West)
+
+```{r}
+# affiliation.model = ergm(n ~ edges + nodematch('affiliation', diff=FALSE, keep=NULL, levels=NULL))
+affiliation.model = ergm(n ~ edges + nodefactor('affiliation', base=1, levels=-1) 
+                         + nodematch('affiliation', diff=FALSE, keep=NULL, levels=NULL))
+
+summary(affiliation.model)
+```
+
+The conditional log-odds of two actors having a tie, keeping the rest of the network fixed, is -3.8994 * change in the number of ties + 0.16382 if node in question is a westerner + 1.33859 if both nodes share the same affiliation.
+
