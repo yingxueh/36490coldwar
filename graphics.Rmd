@@ -10,7 +10,7 @@ library(igraph)
 library(statnet)
 
 theme <- theme(axis.text = element_text(size = 12, color = "grey", family = "Times"),
-        text = element_text(size = 18, face = "bold", color = "black", family = "Times"))
+        text = element_text(size = 16, face = "bold", color = "black", family = "Times"))
 theme_small <- theme(axis.text = element_text(size = 8, color = "grey", family = "Times"),
         text = element_text(size = 12, face = "bold", color = "black", family = "Times"))
 ```
@@ -92,7 +92,9 @@ ggplot(degree.df, aes(x=V1, fill=V2)) +
   xlab("Degree") +
   ggtitle("Westerners Tend to have more Connections") +
   geom_vline(aes(xintercept = mean(degree.df[east.indices,1])), color="#69b3a2") +
-  geom_vline(aes(xintercept = mean(degree.df[west.indices,1])), color="#404080")
+  geom_vline(aes(xintercept = mean(degree.df[west.indices,1])), color="#404080") +
+  labs(fill="Affiliation") +
+  theme
 
 ggplot(degree.df, aes(x=V1, fill=V2)) +
   geom_density(color="#e9ecef", alpha=.6, position = 'identity') +
@@ -100,5 +102,7 @@ ggplot(degree.df, aes(x=V1, fill=V2)) +
   xlab("Degree") +
   ggtitle("Westerners Tend to have more Connections") +
   geom_vline(aes(xintercept = mean(degree.df[east.indices,1])), color="#69b3a2") +
-  geom_vline(aes(xintercept = mean(degree.df[west.indices,1])), color="#404080")
+  geom_vline(aes(xintercept = mean(degree.df[west.indices,1])), color="#404080") +
+  labs(fill="Affiliation") +
+  theme
 ```
