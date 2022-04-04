@@ -13,6 +13,9 @@ theme <- theme(axis.text = element_text(size = 12, color = "grey", family = "Tim
         text = element_text(size = 16, face = "bold", color = "black", family = "Times"))
 theme_small <- theme(axis.text = element_text(size = 8, color = "grey", family = "Times"),
         text = element_text(size = 12, face = "bold", color = "black", family = "Times"))
+
+east.color <- "#aa1342"
+west.color <- "#404080"
 ```
 
 ```{r}
@@ -87,22 +90,20 @@ for (i in 1:108) {
 }
 
 ggplot(degree.df, aes(x=V1, fill=V2)) +
-  geom_histogram(bins=10, color="#e9ecef", alpha=.6, position = 'identity') +
-  scale_fill_manual(values=c("#69b3a2", "#404080")) +
+  geom_histogram(bins=10, color="#e9ecef", alpha=.6, position = 'dodge') +
+  scale_fill_manual(values=c(east.color, west.color)) +
   xlab("Degree") +
   ggtitle("Westerners Tend to have more Connections") +
-  geom_vline(aes(xintercept = mean(degree.df[east.indices,1])), color="#69b3a2") +
-  geom_vline(aes(xintercept = mean(degree.df[west.indices,1])), color="#404080") +
-  labs(fill="Affiliation") +
+  geom_vline(aes(xintercept = mean(degree.df[east.indices,1])), color=east.color) +
+  geom_vline(aes(xintercept = mean(degree.df[west.indices,1])), color=west.color) 
   theme
 
 ggplot(degree.df, aes(x=V1, fill=V2)) +
-  geom_density(color="#e9ecef", alpha=.6, position = 'identity') +
-  scale_fill_manual(values=c("#69b3a2", "#404080")) +
+  geom_density(color="#e9ecef", alpha=.6, position = 'identity', bw=3) +
+  scale_fill_manual(values=c(east.color, west.color)) +
   xlab("Degree") +
   ggtitle("Westerners Tend to have more Connections") +
-  geom_vline(aes(xintercept = mean(degree.df[east.indices,1])), color="#69b3a2") +
-  geom_vline(aes(xintercept = mean(degree.df[west.indices,1])), color="#404080") +
-  labs(fill="Affiliation") +
+  geom_vline(aes(xintercept = mean(degree.df[east.indices,1])), color=east.color) +
+  geom_vline(aes(xintercept = mean(degree.df[west.indices,1])), color=west.color) 
   theme
 ```
