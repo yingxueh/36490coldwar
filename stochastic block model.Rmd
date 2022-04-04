@@ -35,7 +35,7 @@ rowdata = rep(0,108*108)
 mat = matrix(rowdata,ncol=108, nrow=108, byrow=T)
 
 for (j in 1:62){
-  for (i in 1:108){
+  for (i in 2:108){
     if (baseline_frequency[j,i] == 1)
       vec = append(vec, i)
   }
@@ -144,7 +144,7 @@ rowdata = rep(0,108*108)
 mat = matrix(rowdata,ncol=108, nrow=108, byrow=T)
 
 for (j in 1:62){
-  for (i in 1:108){
+  for (i in 2:108){
     if (baseline_frequency[j,i] == 1)
       vec = append(vec, i)
   }
