@@ -45,7 +45,7 @@ def nx_graph_from_adjacency_matrix(M, names, df, fig):
     
     # formatting
     # pos = nx.random_layout(G, seed=490)
-    pos = nx.spring_layout(G, seed=101, k=0.3, iterations=35)
+    pos = nx.spring_layout(G, seed=101, k=0.3, iterations=50)
     # remove isolated nodes
     deg = G.degree()
     to_remove = [n[0] for n in deg if n[1] == 0]

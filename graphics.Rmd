@@ -95,7 +95,8 @@ ggplot(degree.df, aes(x=V1, fill=V2)) +
   xlab("Degree") +
   ggtitle("Westerners Tend to have more Connections") +
   geom_vline(aes(xintercept = mean(degree.df[east.indices,1])), color=east.color) +
-  geom_vline(aes(xintercept = mean(degree.df[west.indices,1])), color=west.color) 
+  geom_vline(aes(xintercept = mean(degree.df[west.indices,1])), color=west.color) +
+  labs(fill="Affiliation") +
   theme
 
 ggplot(degree.df, aes(x=V1, fill=V2)) +
@@ -104,6 +105,7 @@ ggplot(degree.df, aes(x=V1, fill=V2)) +
   xlab("Degree") +
   ggtitle("Westerners Tend to have more Connections") +
   geom_vline(aes(xintercept = mean(degree.df[east.indices,1])), color=east.color) +
-  geom_vline(aes(xintercept = mean(degree.df[west.indices,1])), color=west.color) 
+  geom_vline(aes(xintercept = mean(degree.df[west.indices,1])), color=west.color) +
+  labs(fill="Affiliation") +
   theme
 ```
