@@ -16,7 +16,7 @@ def getdata(filename):
     docs = []
     file = open(filename, 'r')
     for line in file.readlines():
-        docs.append(line)
+        docs.append(line.strip().lower())
     return docs
 
 

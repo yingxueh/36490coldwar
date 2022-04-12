@@ -45,7 +45,7 @@ def nx_graph_from_adjacency_matrix(M, names, df, fig):
     
     # formatting
     # pos = nx.random_layout(G, seed=490)
-    pos = nx.spring_layout(G, seed=101, k=0.3, iterations=35)
+    pos = nx.spring_layout(G, seed=101, k=0.3, iterations=50)
     # remove isolated nodes
     deg = G.degree()
     to_remove = [n[0] for n in deg if n[1] == 0]
@@ -59,9 +59,12 @@ def nx_graph_from_adjacency_matrix(M, names, df, fig):
             s = n[0].upper() + n[1:]
             labels[n] = s
 
+    print("names", len(names), len(G))
     colors = []
     for n in G:
         r = df.loc[df["lastname"].str.lower() == n]
+        if (len(r) == 0):
+            print("not found", n)
         if r.iloc[0]['affiliation'] == "west":
             colors.append("blue")
         elif r.iloc[0]['affiliation'] == "east":
@@ -169,19 +172,22 @@ def get_scraped_graph():
 if __name__ == "__main__":
     namesdf = pd.read_csv("names.csv")
 
-    plt.subplot(1, 2, 1)
+    # plt.subplot(1, 2, 1)
     (names, ids, basedata) = getfreqmatrix("baseline/baseline_frequency.csv")
+    plt.title('Baseline')
     basemat = make_adjacency_matrix(basedata, names)
     (baseG, basef) = nx_graph_from_adjacency_matrix(basemat, names, namesdf, 1)
-    plt.title('Baseline')
-    
+    print(len(baseG.edges))
+    plt.savefig("figs/baseline.png")
+    plt.show()
 
-    plt.subplot(1, 2, 2)
+    # plt.subplot(1, 2, 2)
     plt.title('Our scraping')
     (names, txtfiles, mydata) = getfreqmatrix("frequency.csv")  
     A = make_adjacency_matrix(mydata, names)
     (G, f1) = nx_graph_from_adjacency_matrix(A, names, namesdf, 2)
     # nx_graph_from_biadjacency_matrix(mydata, txtfiles, names)
+    plt.savefig("figs/ourscraping.png")
 
     plt.show()
 
