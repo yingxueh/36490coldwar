@@ -49,13 +49,10 @@ for (doc in 1:nrow(mat)) {
 ```
 
 ```{r}
-# Set east vs. west attribute for each node
-names <- read.csv('names_copy.csv')
-```
-
-```{r}
 n <- network(adj.mat, directed=FALSE)
 
+# Set east vs. west attribute for each node
+names <- read.csv('names_copy.csv')
 names.filtered <- names[!duplicated(names[,c('lastname')]),][1:108,]
 
 # # Checking that names are in same order in both vectors
@@ -88,8 +85,9 @@ Let’s add a term often thought to be a measure of “clustering”: the number
 
 ```{r}
 ## TAKES FOREVER TO RUN, HAVE NO CLUE WHAT THE STATS FOR THIS ONE ARE
-model.1 <- ergm(n ~ edges + triangle)
-summary(model.1)
+#model.2 <- ergm(n ~ edges + gwesp)
+#summary(model.2)
+?ergm.terms
 ```
 
 ## Model 3: Affiliation (East vs. West)
@@ -102,5 +100,7 @@ affiliation.model = ergm(n ~ edges + nodefactor('affiliation', base=1, levels=-1
 summary(affiliation.model)
 ```
 
-The conditional log-odds of two actors having a tie, keeping the rest of the network fixed, is -3.8994 * change in the number of ties + 0.16382 if node in question is a westerner + 1.33859 if both nodes share the same affiliation.
+The conditional log-odds of two actors having a tie, keeping the rest of the network fixed, is -3.8994 * change in the number of ties + 0.16382 if node in question is a westerner + 1.33859 if both nodes share the same affiliation.\
+
+DOUBLE CHECK send/receive -- .32?
 
