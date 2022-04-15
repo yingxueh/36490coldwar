@@ -1,0 +1,111 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(igraph)  
+library(statnet)
+
+theme <- theme(axis.text = element_text(size = 12, color = "grey", family = "Times"),
+        text = element_text(size = 16, face = "bold", color = "black", family = "Times"))
+theme_small <- theme(axis.text = element_text(size = 8, color = "grey", family = "Times"),
+        text = element_text(size = 12, face = "bold", color = "black", family = "Times"))
+
+east.color <- "#aa1342"
+west.color <- "#404080"
+```
+
+```{r}
+# Baseline dataset provided by the professor of which names appear in which document
+# ROWS: document
+# COLS: names
+#       - 1 : name appeared in document at that row
+#       - 0 : name did not appear in document at that row
+df <- read.csv('baseline/baseline_frequency.csv')
+
+# Removing id column, changing colnames to numbers (for indexing later on),
+# converting to matrix
+df <- df %>% select(-1) 
+mat <- as.matrix(df)
+
+# Loop for populating our adjacency matrix
+adj.mat <- matrix(0, ncol(mat), ncol(mat))
+for (doc in 1:nrow(mat)) {
+  for (i in 1:ncol(mat)) {
+    if (mat[doc, i] != 0) {
+      for (j in i+1:length(mat[doc,])) {
+        # R sucks and if i+1 == 109, the loop guard doesn't care and it will 
+        # just count backwards down to 108.
+        # So you need this extra if statement.
+        if (j < 109) {
+          if (mat[doc, j] != 0) {
+            adj.mat[i, j] <- 1
+            adj.mat[j, i] <- 1
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+```{r}
+g <- network(adj.mat, directed=FALSE)
+
+# Set east vs. west attribute for each node
+names <- read.csv('names_copy.csv')
+names.filtered <- names[!duplicated(names[,c('lastname')]),][1:108,]
+
+# # Checking that names are in same order in both vectors
+# tolower(names.filtered[,'lastname'])
+# network.vertex.names(n)
+# tolower(network.vertex.names(n)) == tolower(names.filtered[,'lastname'])
+
+network.vertex.names(g)
+
+g%v%'vertex.names'<- colnames(df)
+g%v%'affiliation'<- names.filtered[,'affiliation']
+
+plot(g, label = network.vertex.names(g))
+```
+
+```{r}
+east.indices <- which(names.filtered['affiliation'] == 'east')
+west.indices <- which(names.filtered['affiliation'] == 'west')
+```
+
+```{r}
+degrees <- degree(g)
+
+affiliations <- get.vertex.attribute(g, 'affiliation')
+
+degree.df <- as.data.frame(matrix(nrow=108, ncol=2))
+
+for (i in 1:108) {
+  degree.df[i, 1] <- degrees[i]
+  degree.df[i, 2] <- affiliations[i]
+}
+
+ggplot(degree.df, aes(x=V1, fill=V2)) +
+  geom_histogram(bins=10, color="#e9ecef", alpha=.6, position = 'dodge') +
+  scale_fill_manual(values=c(east.color, west.color)) +
+  xlab("Degree") +
+  ggtitle("Westerners Tend to have more Connections") +
+  geom_vline(aes(xintercept = mean(degree.df[east.indices,1])), color=east.color) +
+  geom_vline(aes(xintercept = mean(degree.df[west.indices,1])), color=west.color) +
+  labs(fill="Affiliation") +
+  theme
+
+ggplot(degree.df, aes(x=V1, fill=V2)) +
+  geom_density(color="#e9ecef", alpha=.6, position = 'identity', bw=3) +
+  scale_fill_manual(values=c(east.color, west.color)) +
+  xlab("Degree") +
+  ggtitle("Westerners Tend to have more Connections") +
+  geom_vline(aes(xintercept = mean(degree.df[east.indices,1])), color=east.color) +
+  geom_vline(aes(xintercept = mean(degree.df[west.indices,1])), color=west.color) +
+  labs(fill="Affiliation") +
+  theme
+```
