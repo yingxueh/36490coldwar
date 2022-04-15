@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "new_gbd.py", line 183, in <module>
+    step3()
+  File "new_gbd.py", line 162, in step3
+    os.mkdir(new_directory)
+NameError: name 'new_directory' is not defined
