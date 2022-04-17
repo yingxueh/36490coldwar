@@ -52,18 +52,31 @@ for (doc in 1:nrow(mat)) {
 n <- network(adj.mat, directed=FALSE)
 
 # Set east vs. west attribute for each node
-names <- read.csv('names_copy.csv')
+names <- read.csv('names.csv')
 names.filtered <- names[!duplicated(names[,c('lastname')]),][1:108,]
+names.filtered.sorted <- names.filtered[order(names.filtered$lastname),]
+
+names.filtered.sorted
 
 # # Checking that names are in same order in both vectors
-# tolower(names.filtered[,'lastname'])
-# network.vertex.names(n)
-# tolower(network.vertex.names(n)) == tolower(names.filtered[,'lastname'])
+n %v% 'vertex.names'<- str_to_title(sort(names.filtered.sorted['lastname']))
+#network.vertex.names(g)
 
-names.filtered[,'affiliation']
+#df
+#names
+#names.filtered[,'lastname']
+
+for (i in 1:108) {
+  print(paste(i, paste(names.filtered.sorted[i,'lastname'], colnames(df)[i]))) }
+
+#names.filtered[,'affiliation']
 
 n%v%'vertex.names'<- colnames(df)
-n%v%'affiliation'<- names.filtered[,'affiliation']
+n%v%'affiliation'<- names.filtered.sorted[,'affiliation']
+n%v%'DC' <- names.filtered.sorted[,'DC.Y.N.']
+n%v%'media' <- names.filtered.sorted[,'media.Y.N.']
+n%v%'private' <- names.filtered.sorted[,'private.Y.N.']
+
 # network.vertex.names(n)
 # plot(n)
 ```
@@ -104,3 +117,31 @@ The conditional log-odds of two actors having a tie, keeping the rest of the net
 
 DOUBLE CHECK send/receive -- .32?
 
+```{r}
+# affiliation.model = ergm(n ~ edges + nodematch('affiliation', diff=FALSE, keep=NULL, levels=NULL))
+affiliation.model = ergm(n ~ edges + nodefactor('DC', base=1, levels=-1))
+
+summary(affiliation.model)
+```
+
+```{r}
+# affiliation.model = ergm(n ~ edges + nodematch('affiliation', diff=FALSE, keep=NULL, levels=NULL))
+affiliation.model = ergm(n ~ edges + nodefactor('DC', base=1, levels=-1))
+
+summary(affiliation.model)
+```
+
+```{r}
+# affiliation.model = ergm(n ~ edges + nodematch('affiliation', diff=FALSE, keep=NULL, levels=NULL))
+affiliation.model = ergm(n ~ edges + nodefactor('media', base=1, levels=-1))
+
+summary(affiliation.model)
+```
+
+
+```{r}
+# affiliation.model = ergm(n ~ edges + nodematch('affiliation', diff=FALSE, keep=NULL, levels=NULL))
+affiliation.model = ergm(n ~ edges + nodefactor('private', base=1, levels=-1))
+
+summary(affiliation.model)
+```

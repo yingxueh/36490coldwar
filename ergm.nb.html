@@ -1800,42 +1800,35 @@ for (doc in 1:nrow(mat)) {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubiA8LSBuZXR3b3JrKGFkai5tYXQsIGRpcmVjdGVkPUZBTFNFKVxuXG5uYW1lcy5maWx0ZXJlZCA8LSBuYW1lc1shZHVwbGljYXRlZChuYW1lc1ssYygnbGFzdG5hbWUnKV0pLF1bMToxMDgsXVxuXG4jICMgQ2hlY2tpbmcgdGhhdCBuYW1lcyBhcmUgaW4gc2FtZSBvcmRlciBpbiBib3RoIHZlY3RvcnNcbiMgdG9sb3dlcihuYW1lcy5maWx0ZXJlZFssJ2xhc3RuYW1lJ10pXG4jIG5ldHdvcmsudmVydGV4Lm5hbWVzKG4pXG4jIHRvbG93ZXIobmV0d29yay52ZXJ0ZXgubmFtZXMobikpID09IHRvbG93ZXIobmFtZXMuZmlsdGVyZWRbLCdsYXN0bmFtZSddKVxuXG5uYW1lcy5maWx0ZXJlZFssJ2FmZmlsaWF0aW9uJ11cbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubiA8LSBuZXR3b3JrKGFkai5tYXQsIGRpcmVjdGVkPUZBTFNFKVxuXG4jIFNldCBlYXN0IHZzLiB3ZXN0IGF0dHJpYnV0ZSBmb3IgZWFjaCBub2RlXG5uYW1lcyA8LSByZWFkLmNzdignbmFtZXMuY3N2Jylcbm5hbWVzLmZpbHRlcmVkIDwtIG5hbWVzWyFkdXBsaWNhdGVkKG5hbWVzWyxjKCdsYXN0bmFtZScpXSksXVsxOjEwOCxdXG5uYW1lcy5maWx0ZXJlZC5zb3J0ZWQgPC0gbmFtZXMuZmlsdGVyZWRbb3JkZXIobmFtZXMuZmlsdGVyZWQkbGFzdG5hbWUpLF1cblxubmFtZXMuZmlsdGVyZWQuc29ydGVkXG5cbiMgIyBDaGVja2luZyB0aGF0IG5hbWVzIGFyZSBpbiBzYW1lIG9yZGVyIGluIGJvdGggdmVjdG9yc1xubiAldiUgJ3ZlcnRleC5uYW1lcyc8LSBzdHJfdG9fdGl0bGUoc29ydChuYW1lcy5maWx0ZXJlZC5zb3J0ZWRbJ2xhc3RuYW1lJ10pKVxuI25ldHdvcmsudmVydGV4Lm5hbWVzKGcpXG5cbiNkZlxuI25hbWVzXG4jbmFtZXMuZmlsdGVyZWRbLCdsYXN0bmFtZSddXG5cbmZvciAoaSBpbiAxOjEwOCkge1xuICBwcmludChwYXN0ZShpLCBwYXN0ZShuYW1lcy5maWx0ZXJlZC5zb3J0ZWRbaSwnbGFzdG5hbWUnXSwgY29sbmFtZXMoZGYpW2ldKSkpIH1cblxuI25hbWVzLmZpbHRlcmVkWywnYWZmaWxpYXRpb24nXVxuXG5uJXYlJ3ZlcnRleC5uYW1lcyc8LSBjb2xuYW1lcyhkZilcbm4ldiUnYWZmaWxpYXRpb24nPC0gbmFtZXMuZmlsdGVyZWQuc29ydGVkWywnYWZmaWxpYXRpb24nXVxubiV2JSdEQycgPC0gbmFtZXMuZmlsdGVyZWQuc29ydGVkWywnREMuWS5OLiddXG5uJXYlJ21lZGlhJyA8LSBuYW1lcy5maWx0ZXJlZC5zb3J0ZWRbLCdtZWRpYS5ZLk4uJ11cbm4ldiUncHJpdmF0ZScgPC0gbmFtZXMuZmlsdGVyZWQuc29ydGVkWywncHJpdmF0ZS5ZLk4uJ11cblxuIyBuZXR3b3JrLnZlcnRleC5uYW1lcyhuKVxuIyBwbG90KG4pXG5gYGAifQ== -->
 <pre class="r"><code>n &lt;- network(adj.mat, directed=FALSE)
 
+# Set east vs. west attribute for each node
+names &lt;- read.csv(&#39;names.csv&#39;)
 names.filtered &lt;- names[!duplicated(names[,c(&#39;lastname&#39;)]),][1:108,]
+names.filtered.sorted &lt;- names.filtered[order(names.filtered$lastname),]
+
+names.filtered.sorted
 
 # # Checking that names are in same order in both vectors
-# tolower(names.filtered[,&#39;lastname&#39;])
-# network.vertex.names(n)
-# tolower(network.vertex.names(n)) == tolower(names.filtered[,&#39;lastname&#39;])
+n %v% &#39;vertex.names&#39;&lt;- str_to_title(sort(names.filtered.sorted[&#39;lastname&#39;]))
+#network.vertex.names(g)
 
-names.filtered[,&#39;affiliation&#39;]</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICBbMV0gXCJ3ZXN0XCIgXCJ3ZXN0XCIgXCJ3ZXN0XCIgXCJ3ZXN0XCIgXCJ3ZXN0XCIgXCJ3ZXN0XCIgXCJ3ZXN0XCIgXCJ3ZXN0XCIgXCJ3ZXN0XCIgXCJ3ZXN0XCIgXCJ3ZXN0XCIgXCJ3ZXN0XCIgXCJ3ZXN0XCIgXCJ3ZXN0XCIgXCJ3ZXN0XCJcbiBbMTZdIFwiZWFzdFwiIFwid2VzdFwiIFwid2VzdFwiIFwid2VzdFwiIFwiZWFzdFwiIFwid2VzdFwiIFwid2VzdFwiIFwid2VzdFwiIFwid2VzdFwiIFwiZWFzdFwiIFwid2VzdFwiIFwiZWFzdFwiIFwid2VzdFwiIFwiZWFzdFwiIFwiZWFzdFwiXG4gWzMxXSBcImVhc3RcIiBcIndlc3RcIiBcImVhc3RcIiBcImVhc3RcIiBcIndlc3RcIiBcIndlc3RcIiBcIndlc3RcIiBcIndlc3RcIiBcIndlc3RcIiBcImVhc3RcIiBcIndlc3RcIiBcIndlc3RcIiBcIndlc3RcIiBcImVhc3RcIiBcImVhc3RcIlxuIFs0Nl0gXCJ3ZXN0XCIgXCJ3ZXN0XCIgXCJ3ZXN0XCIgXCJ3ZXN0XCIgXCJlYXN0XCIgXCJlYXN0XCIgXCJlYXN0XCIgXCJlYXN0XCIgXCJ3ZXN0XCIgXCJlYXN0XCIgXCJ3ZXN0XCIgXCJ3ZXN0XCIgXCJlYXN0XCIgXCJ3ZXN0XCIgXCJlYXN0XCJcbiBbNjFdIFwiZWFzdFwiIFwid2VzdFwiIFwid2VzdFwiIFwid2VzdFwiIFwid2VzdFwiIFwid2VzdFwiIFwiZWFzdFwiIFwid2VzdFwiIFwid2VzdFwiIFwid2VzdFwiIFwiZWFzdFwiIFwiZWFzdFwiIFwid2VzdFwiIFwid2VzdFwiIFwiZWFzdFwiXG4gWzc2XSBcImVhc3RcIiBcIndlc3RcIiBcImVhc3RcIiBcIndlc3RcIiBcImVhc3RcIiBcIndlc3RcIiBcImVhc3RcIiBcImVhc3RcIiBcIndlc3RcIiBcIndlc3RcIiBcIndlc3RcIiBcImVhc3RcIiBcImVhc3RcIiBcIndlc3RcIiBcIndlc3RcIlxuIFs5MV0gXCJ3ZXN0XCIgXCJlYXN0XCIgXCJlYXN0XCIgXCJ3ZXN0XCIgXCJ3ZXN0XCIgXCJ3ZXN0XCIgXCJ3ZXN0XCIgXCJ3ZXN0XCIgXCJlYXN0XCIgXCJ3ZXN0XCIgXCJlYXN0XCIgXCJlYXN0XCIgXCJlYXN0XCIgXCJlYXN0XCIgXCJ3ZXN0XCJcblsxMDZdIFwiZWFzdFwiIFwid2VzdFwiIFwiZWFzdFwiXG4ifQ== -->
-<pre><code>  [1] &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot;
- [16] &quot;east&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;east&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;east&quot; &quot;west&quot; &quot;east&quot; &quot;west&quot; &quot;east&quot; &quot;east&quot;
- [31] &quot;east&quot; &quot;west&quot; &quot;east&quot; &quot;east&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;east&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;east&quot; &quot;east&quot;
- [46] &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;east&quot; &quot;east&quot; &quot;east&quot; &quot;east&quot; &quot;west&quot; &quot;east&quot; &quot;west&quot; &quot;west&quot; &quot;east&quot; &quot;west&quot; &quot;east&quot;
- [61] &quot;east&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;east&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;east&quot; &quot;east&quot; &quot;west&quot; &quot;west&quot; &quot;east&quot;
- [76] &quot;east&quot; &quot;west&quot; &quot;east&quot; &quot;west&quot; &quot;east&quot; &quot;west&quot; &quot;east&quot; &quot;east&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;east&quot; &quot;east&quot; &quot;west&quot; &quot;west&quot;
- [91] &quot;west&quot; &quot;east&quot; &quot;east&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;west&quot; &quot;east&quot; &quot;west&quot; &quot;east&quot; &quot;east&quot; &quot;east&quot; &quot;east&quot; &quot;west&quot;
-[106] &quot;east&quot; &quot;west&quot; &quot;east&quot;</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWZmaWwuYmluYXJ5IDwtIGdzdWIoJ2Vhc3QnLCAnMScsIG5hbWVzLmZpbHRlcmVkWywnYWZmaWxpYXRpb24nXSlcbmFmZmlsLmJpbmFyeSA8LSBnc3ViKCd3ZXN0JywgJzAnLCBhZmZpbC5iaW5hcnkpXG5hZmZpbC5iaW5hcnkgPC0gYXMuaW50ZWdlcihhZmZpbC5iaW5hcnkpXG5cbmFmZmlsLmJpbmFyeVxuYGBgIn0= -->
-<pre class="r"><code>affil.binary &lt;- gsub(&#39;east&#39;, &#39;1&#39;, names.filtered[,&#39;affiliation&#39;])
-affil.binary &lt;- gsub(&#39;west&#39;, &#39;0&#39;, affil.binary)
-affil.binary &lt;- as.integer(affil.binary)
+#df
+#names
+#names.filtered[,&#39;lastname&#39;]
 
-affil.binary</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICBbMV0gMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMSAwIDAgMCAxIDAgMCAwIDAgMSAwIDEgMCAxIDEgMSAwIDEgMSAwIDAgMCAwIDAgMSAwIDAgMCAxIDEgMCAwIDAgMCAxIDEgMSAxIDAgMVxuIFs1Nl0gMCAwIDEgMCAxIDEgMCAwIDAgMCAwIDEgMCAwIDAgMSAxIDAgMCAxIDEgMCAxIDAgMSAwIDEgMSAwIDAgMCAxIDEgMCAwIDAgMSAxIDAgMCAwIDAgMCAxIDAgMSAxIDEgMSAwIDEgMCAxXG4ifQ== -->
-<pre><code>  [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 1 0 1 0 1 1 1 0 1 1 0 0 0 0 0 1 0 0 0 1 1 0 0 0 0 1 1 1 1 0 1
- [56] 0 0 1 0 1 1 0 0 0 0 0 1 0 0 0 1 1 0 0 1 1 0 1 0 1 0 1 1 0 0 0 1 1 0 0 0 1 1 0 0 0 0 0 1 0 1 1 1 1 0 1 0 1</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubiV2JSd2ZXJ0ZXgubmFtZXMnPC0gY29sbmFtZXMoZGYpXG5uJXYlJ2FmZmlsaWF0aW9uJzwtIG5hbWVzLmZpbHRlcmVkWywnYWZmaWxpYXRpb24nXVxuIyBuZXR3b3JrLnZlcnRleC5uYW1lcyhuKVxuIyBwbG90KG4pXG5gYGAifQ== -->
-<pre class="r"><code>n%v%&#39;vertex.names&#39;&lt;- colnames(df)
-n%v%&#39;affiliation&#39;&lt;- names.filtered[,&#39;affiliation&#39;]
+for (i in 1:108) {
+  print(paste(i, paste(names.filtered.sorted[i,&#39;lastname&#39;], colnames(df)[i]))) }
+
+#names.filtered[,&#39;affiliation&#39;]
+
+n%v%&#39;vertex.names&#39;&lt;- colnames(df)
+n%v%&#39;affiliation&#39;&lt;- names.filtered.sorted[,&#39;affiliation&#39;]
+n%v%&#39;DC&#39; &lt;- names.filtered.sorted[,&#39;DC.Y.N.&#39;]
+n%v%&#39;media&#39; &lt;- names.filtered.sorted[,&#39;media.Y.N.&#39;]
+n%v%&#39;private&#39; &lt;- names.filtered.sorted[,&#39;private.Y.N.&#39;]
+
 # network.vertex.names(n)
 # plot(n)</code></pre>
 <!-- rnb-source-end -->
@@ -1845,38 +1838,12 @@ n%v%&#39;affiliation&#39;&lt;- names.filtered[,&#39;affiliation&#39;]
 <h2>Model 1: Null model</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBOVUxMIE1PREVMXG4jIEVzdGltYXRlIHRoZSBzaW1wbGVzdCBtb2RlbCwgb25lIHdpdGggb25seSBhIHRlcm0gZm9yIHRpZSBkZW5zaXR5IChha2luIHRvIGFuIGludGVyY2VwdCB0ZXJtIGluIGEgZ2xtKVxubnVsbC5tb2RlbCA9IGVyZ20obiB+IGVkZ2VzKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBOVUxMIE1PREVMXG4jIEVzdGltYXRlIHRoZSBzaW1wbGVzdCBtb2RlbCwgb25lIHdpdGggb25seSBhIHRlcm0gZm9yIHRpZSBkZW5zaXR5IChha2luIHRvIGFuIGludGVyY2VwdCB0ZXJtIGluIGEgZ2xtKVxubnVsbC5tb2RlbCA9IGVyZ20obiB+IGVkZ2VzKVxuc3VtbWFyeShudWxsLm1vZGVsKVxuYGBgIn0= -->
 <pre class="r"><code># NULL MODEL
 # Estimate the simplest model, one with only a term for tie density (akin to an intercept term in a glm)
-null.model = ergm(n ~ edges)</code></pre>
+null.model = ergm(n ~ edges)
+summary(null.model)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiU3RhcnRpbmcgbWF4aW11bSBwc2V1ZG9saWtlbGlob29kIGVzdGltYXRpb24gKE1QTEUpOlxuRXZhbHVhdGluZyB0aGUgcHJlZGljdG9yIGFuZCByZXNwb25zZSBtYXRyaXguXG5NYXhpbWl6aW5nIHRoZSBwc2V1ZG9saWtlbGlob29kLlxuRmluaXNoZWQgTVBMRS5cblN0b3BwaW5nIGF0IHRoZSBpbml0aWFsIGVzdGltYXRlLlxuRXZhbHVhdGluZyBsb2ctbGlrZWxpaG9vZCBhdCB0aGUgZXN0aW1hdGUuIFxuIn0= -->
-<pre><code>Starting maximum pseudolikelihood estimation (MPLE):
-Evaluating the predictor and response matrix.
-Maximizing the pseudolikelihood.
-Finished MPLE.
-Stopping at the initial estimate.
-Evaluating log-likelihood at the estimate. </code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShudWxsLm1vZGVsKVxuYGBgIn0= -->
-<pre class="r"><code>summary(null.model)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ2FsbDpcbmVyZ20oZm9ybXVsYSA9IG4gfiBlZGdlcylcblxuTWF4aW11bSBMaWtlbGlob29kIFJlc3VsdHM6XG5cbiAgICAgIEVzdGltYXRlIFN0ZC4gRXJyb3IgTUNNQyAlIHogdmFsdWUgUHIoPnx6fCkgICAgXG5lZGdlcyAtMi45MzMyMCAgICAwLjA2MDA2ICAgICAgMCAgLTQ4Ljg0ICAgPDFlLTA0ICoqKlxuLS0tXG5TaWduaWYuIGNvZGVzOiAgMCDigJgqKirigJkgMC4wMDEg4oCYKirigJkgMC4wMSDigJgq4oCZIDAuMDUg4oCYLuKAmSAwLjEg4oCYIOKAmSAxXG5cbiAgICAgTnVsbCBEZXZpYW5jZTogODAxMCAgb24gNTc3OCAgZGVncmVlcyBvZiBmcmVlZG9tXG4gUmVzaWR1YWwgRGV2aWFuY2U6IDIzMTIgIG9uIDU3NzcgIGRlZ3JlZXMgb2YgZnJlZWRvbVxuIFxuQUlDOiAyMzE0ICBCSUM6IDIzMjEgIChTbWFsbGVyIGlzIGJldHRlci4gTUMgU3RkLiBFcnIuID0gMClcbiJ9 -->
-<pre><code>Call:
-ergm(formula = n ~ edges)
-
-Maximum Likelihood Results:
-
-      Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
-edges -2.93320    0.06006      0  -48.84   &lt;1e-04 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-     Null Deviance: 8010  on 5778  degrees of freedom
- Residual Deviance: 2312  on 5777  degrees of freedom
- 
-AIC: 2314  BIC: 2321  (Smaller is better. MC Std. Err. = 0)</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>The conditional log-odds of two actors having a tie, keeping the rest of the network fixed, is -2.9332 * change in the number of ties.</p>
@@ -1886,18 +1853,12 @@ AIC: 2314  BIC: 2321  (Smaller is better. MC Std. Err. = 0)</code></pre>
 <p>Let’s add a term often thought to be a measure of “clustering”: the number of completed triangles in the network.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyMgVEFLRVMgRk9SRVZFUiBUTyBSVU4sIEhBVkUgTk8gQ0xVRSBXSEFUIFRIRSBTVEFUUyBGT1IgVEhJUyBPTkUgQVJFXG5tb2RlbC4xIDwtIGVyZ20obiB+IGVkZ2VzICsgdHJpYW5nbGUpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyMgVEFLRVMgRk9SRVZFUiBUTyBSVU4sIEhBVkUgTk8gQ0xVRSBXSEFUIFRIRSBTVEFUUyBGT1IgVEhJUyBPTkUgQVJFXG4jbW9kZWwuMiA8LSBlcmdtKG4gfiBlZGdlcyArIGd3ZXNwKVxuI3N1bW1hcnkobW9kZWwuMilcbj9lcmdtLnRlcm1zXG5gYGAifQ== -->
 <pre class="r"><code>## TAKES FOREVER TO RUN, HAVE NO CLUE WHAT THE STATS FOR THIS ONE ARE
-model.1 &lt;- ergm(n ~ edges + triangle)</code></pre>
+#model.2 &lt;- ergm(n ~ edges + gwesp)
+#summary(model.2)
+?ergm.terms</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiU3RhcnRpbmcgbWF4aW11bSBwc2V1ZG9saWtlbGlob29kIGVzdGltYXRpb24gKE1QTEUpOlxuRXZhbHVhdGluZyB0aGUgcHJlZGljdG9yIGFuZCByZXNwb25zZSBtYXRyaXguXG5NYXhpbWl6aW5nIHRoZSBwc2V1ZG9saWtlbGlob29kLlxuRmluaXNoZWQgTVBMRS5cblN0YXJ0aW5nIE1vbnRlIENhcmxvIG1heGltdW0gbGlrZWxpaG9vZCBlc3RpbWF0aW9uIChNQ01MRSk6XG5JdGVyYXRpb24gMSBvZiBhdCBtb3N0IDYwOlxuIn0= -->
-<pre><code>Starting maximum pseudolikelihood estimation (MPLE):
-Evaluating the predictor and response matrix.
-Maximizing the pseudolikelihood.
-Finished MPLE.
-Starting Monte Carlo maximum likelihood estimation (MCMLE):
-Iteration 1 of at most 60:</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -1905,51 +1866,60 @@ Iteration 1 of at most 60:</code></pre>
 <h2>Model 3: Affiliation (East vs. West)</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBhZmZpbGlhdGlvbi5tb2RlbCA9IGVyZ20obiB+IGVkZ2VzICsgbm9kZW1hdGNoKCdhZmZpbGlhdGlvbicsIGRpZmY9RkFMU0UsIGtlZXA9TlVMTCwgbGV2ZWxzPU5VTEwpKVxuYWZmaWxpYXRpb24ubW9kZWwgPSBlcmdtKG4gfiBlZGdlcyArIG5vZGVmYWN0b3IoJ2FmZmlsaWF0aW9uJywgYmFzZT0xLCBsZXZlbHM9LTEpIFxuICAgICAgICAgICAgICAgICAgICAgICAgICsgbm9kZW1hdGNoKCdhZmZpbGlhdGlvbicsIGRpZmY9RkFMU0UsIGtlZXA9TlVMTCwgbGV2ZWxzPU5VTEwpKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBhZmZpbGlhdGlvbi5tb2RlbCA9IGVyZ20obiB+IGVkZ2VzICsgbm9kZW1hdGNoKCdhZmZpbGlhdGlvbicsIGRpZmY9RkFMU0UsIGtlZXA9TlVMTCwgbGV2ZWxzPU5VTEwpKVxuYWZmaWxpYXRpb24ubW9kZWwgPSBlcmdtKG4gfiBlZGdlcyArIG5vZGVmYWN0b3IoJ2FmZmlsaWF0aW9uJywgYmFzZT0xLCBsZXZlbHM9LTEpIFxuICAgICAgICAgICAgICAgICAgICAgICAgICsgbm9kZW1hdGNoKCdhZmZpbGlhdGlvbicsIGRpZmY9RkFMU0UsIGtlZXA9TlVMTCwgbGV2ZWxzPU5VTEwpKVxuXG5zdW1tYXJ5KGFmZmlsaWF0aW9uLm1vZGVsKVxuYGBgIn0= -->
 <pre class="r"><code># affiliation.model = ergm(n ~ edges + nodematch(&#39;affiliation&#39;, diff=FALSE, keep=NULL, levels=NULL))
 affiliation.model = ergm(n ~ edges + nodefactor(&#39;affiliation&#39;, base=1, levels=-1) 
-                         + nodematch(&#39;affiliation&#39;, diff=FALSE, keep=NULL, levels=NULL))</code></pre>
+                         + nodematch(&#39;affiliation&#39;, diff=FALSE, keep=NULL, levels=NULL))
+
+summary(affiliation.model)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiU3RhcnRpbmcgbWF4aW11bSBwc2V1ZG9saWtlbGlob29kIGVzdGltYXRpb24gKE1QTEUpOlxuRXZhbHVhdGluZyB0aGUgcHJlZGljdG9yIGFuZCByZXNwb25zZSBtYXRyaXguXG5NYXhpbWl6aW5nIHRoZSBwc2V1ZG9saWtlbGlob29kLlxuRmluaXNoZWQgTVBMRS5cblN0b3BwaW5nIGF0IHRoZSBpbml0aWFsIGVzdGltYXRlLlxuRXZhbHVhdGluZyBsb2ctbGlrZWxpaG9vZCBhdCB0aGUgZXN0aW1hdGUuIFxuIn0= -->
-<pre><code>Starting maximum pseudolikelihood estimation (MPLE):
-Evaluating the predictor and response matrix.
-Maximizing the pseudolikelihood.
-Finished MPLE.
-Stopping at the initial estimate.
-Evaluating log-likelihood at the estimate. </code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShhZmZpbGlhdGlvbi5tb2RlbClcbmBgYCJ9 -->
-<pre class="r"><code>summary(affiliation.model)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ2FsbDpcbmVyZ20oZm9ybXVsYSA9IG4gfiBlZGdlcyArIG5vZGVmYWN0b3IoXCJhZmZpbGlhdGlvblwiLCBiYXNlID0gMSwgXG4gICAgbGV2ZWxzID0gLTEpICsgbm9kZW1hdGNoKFwiYWZmaWxpYXRpb25cIiwgZGlmZiA9IEZBTFNFLCBrZWVwID0gTlVMTCwgXG4gICAgbGV2ZWxzID0gTlVMTCkpXG5cbk1heGltdW0gTGlrZWxpaG9vZCBSZXN1bHRzOlxuXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgRXN0aW1hdGUgU3RkLiBFcnJvciBNQ01DICUgeiB2YWx1ZSBQcig+fHp8KSAgICBcbmVkZ2VzICAgICAgICAgICAgICAgICAgICAgICAtNC4wNjMxNyAgICAwLjE2MDg3ICAgICAgMCAtMjUuMjU4ICAgPDFlLTA0ICoqKlxubm9kZWZhY3Rvci5hZmZpbGlhdGlvbi53ZXN0ICAwLjE2MzgyICAgIDAuMDgzNTggICAgICAwICAgMS45NjAgICAgIDAuMDUgKiAgXG5ub2RlbWF0Y2guYWZmaWxpYXRpb24gICAgICAgIDEuMzM4NTkgICAgMC4xNjA4NyAgICAgIDAgICA4LjMyMSAgIDwxZS0wNCAqKipcbi0tLVxuU2lnbmlmLiBjb2RlczogIDAg4oCYKioq4oCZIDAuMDAxIOKAmCoq4oCZIDAuMDEg4oCYKuKAmSAwLjA1IOKAmC7igJkgMC4xIOKAmCDigJkgMVxuXG4gICAgIE51bGwgRGV2aWFuY2U6IDgwMTAgIG9uIDU3NzggIGRlZ3JlZXMgb2YgZnJlZWRvbVxuIFJlc2lkdWFsIERldmlhbmNlOiAyMTk4ICBvbiA1Nzc1ICBkZWdyZWVzIG9mIGZyZWVkb21cbiBcbkFJQzogMjIwNCAgQklDOiAyMjI0ICAoU21hbGxlciBpcyBiZXR0ZXIuIE1DIFN0ZC4gRXJyLiA9IDApXG4ifQ== -->
-<pre><code>Call:
-ergm(formula = n ~ edges + nodefactor(&quot;affiliation&quot;, base = 1, 
-    levels = -1) + nodematch(&quot;affiliation&quot;, diff = FALSE, keep = NULL, 
-    levels = NULL))
-
-Maximum Likelihood Results:
-
-                            Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
-edges                       -4.06317    0.16087      0 -25.258   &lt;1e-04 ***
-nodefactor.affiliation.west  0.16382    0.08358      0   1.960     0.05 *  
-nodematch.affiliation        1.33859    0.16087      0   8.321   &lt;1e-04 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-     Null Deviance: 8010  on 5778  degrees of freedom
- Residual Deviance: 2198  on 5775  degrees of freedom
- 
-AIC: 2204  BIC: 2224  (Smaller is better. MC Std. Err. = 0)</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>The conditional log-odds of two actors having a tie, keeping the rest of the network fixed, is -3.8994 * change in the number of ties + 0.16382 if node in question is a westerner + 1.33859 if both nodes share the same affiliation.<br />
 </p>
 <p>DOUBLE CHECK send/receive – .32?</p>
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBhZmZpbGlhdGlvbi5tb2RlbCA9IGVyZ20obiB+IGVkZ2VzICsgbm9kZW1hdGNoKCdhZmZpbGlhdGlvbicsIGRpZmY9RkFMU0UsIGtlZXA9TlVMTCwgbGV2ZWxzPU5VTEwpKVxuYWZmaWxpYXRpb24ubW9kZWwgPSBlcmdtKG4gfiBlZGdlcyArIG5vZGVmYWN0b3IoJ0RDJywgYmFzZT0xLCBsZXZlbHM9LTEpKVxuXG5zdW1tYXJ5KGFmZmlsaWF0aW9uLm1vZGVsKVxuYGBgIn0= -->
+<pre class="r"><code># affiliation.model = ergm(n ~ edges + nodematch(&#39;affiliation&#39;, diff=FALSE, keep=NULL, levels=NULL))
+affiliation.model = ergm(n ~ edges + nodefactor(&#39;DC&#39;, base=1, levels=-1))
+
+summary(affiliation.model)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBhZmZpbGlhdGlvbi5tb2RlbCA9IGVyZ20obiB+IGVkZ2VzICsgbm9kZW1hdGNoKCdhZmZpbGlhdGlvbicsIGRpZmY9RkFMU0UsIGtlZXA9TlVMTCwgbGV2ZWxzPU5VTEwpKVxuYWZmaWxpYXRpb24ubW9kZWwgPSBlcmdtKG4gfiBlZGdlcyArIG5vZGVmYWN0b3IoJ0RDJywgYmFzZT0xLCBsZXZlbHM9LTEpKVxuXG5zdW1tYXJ5KGFmZmlsaWF0aW9uLm1vZGVsKVxuYGBgIn0= -->
+<pre class="r"><code># affiliation.model = ergm(n ~ edges + nodematch(&#39;affiliation&#39;, diff=FALSE, keep=NULL, levels=NULL))
+affiliation.model = ergm(n ~ edges + nodefactor(&#39;DC&#39;, base=1, levels=-1))
+
+summary(affiliation.model)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBhZmZpbGlhdGlvbi5tb2RlbCA9IGVyZ20obiB+IGVkZ2VzICsgbm9kZW1hdGNoKCdhZmZpbGlhdGlvbicsIGRpZmY9RkFMU0UsIGtlZXA9TlVMTCwgbGV2ZWxzPU5VTEwpKVxuYWZmaWxpYXRpb24ubW9kZWwgPSBlcmdtKG4gfiBlZGdlcyArIG5vZGVmYWN0b3IoJ21lZGlhJywgYmFzZT0xLCBsZXZlbHM9LTEpKVxuXG5zdW1tYXJ5KGFmZmlsaWF0aW9uLm1vZGVsKVxuYGBgIn0= -->
+<pre class="r"><code># affiliation.model = ergm(n ~ edges + nodematch(&#39;affiliation&#39;, diff=FALSE, keep=NULL, levels=NULL))
+affiliation.model = ergm(n ~ edges + nodefactor(&#39;media&#39;, base=1, levels=-1))
+
+summary(affiliation.model)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBhZmZpbGlhdGlvbi5tb2RlbCA9IGVyZ20obiB+IGVkZ2VzICsgbm9kZW1hdGNoKCdhZmZpbGlhdGlvbicsIGRpZmY9RkFMU0UsIGtlZXA9TlVMTCwgbGV2ZWxzPU5VTEwpKVxuYWZmaWxpYXRpb24ubW9kZWwgPSBlcmdtKG4gfiBlZGdlcyArIG5vZGVmYWN0b3IoJ3ByaXZhdGUnLCBiYXNlPTEsIGxldmVscz0tMSkpXG5cbnN1bW1hcnkoYWZmaWxpYXRpb24ubW9kZWwpXG5gYGAifQ== -->
+<pre class="r"><code># affiliation.model = ergm(n ~ edges + nodematch(&#39;affiliation&#39;, diff=FALSE, keep=NULL, levels=NULL))
+affiliation.model = ergm(n ~ edges + nodefactor(&#39;private&#39;, base=1, levels=-1))
+
+summary(affiliation.model)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CiMgTGlicmFyaWVzCgojIGluc3RhbGwucGFja2FnZXMoaWdyYXBoKQojIGluc3RhbGwucGFja2FnZXMoJ3N0YXRuZXQnKQoKbGlicmFyeSh0aWR5dmVyc2UpCmxpYnJhcnkoaWdyYXBoKSAgICAjIEZvciBjcmVhdGluZyB0aGUgbmV0d29yawpsaWJyYXJ5KHN0YXRuZXQpICAgIyBGb3IgRVJHTQpgYGAKCmBgYHtyfQojIEJhc2VsaW5lIGRhdGFzZXQgcHJvdmlkZWQgYnkgdGhlIHByb2Zlc3NvciBvZiB3aGljaCBuYW1lcyBhcHBlYXIgaW4gd2hpY2ggZG9jdW1lbnQKIyBST1dTOiBkb2N1bWVudAojIENPTFM6IG5hbWVzCiMgICAgICAgLSAxIDogbmFtZSBhcHBlYXJlZCBpbiBkb2N1bWVudCBhdCB0aGF0IHJvdwojICAgICAgIC0gMCA6IG5hbWUgZGlkIG5vdCBhcHBlYXIgaW4gZG9jdW1lbnQgYXQgdGhhdCByb3cKZGYgPC0gcmVhZC5jc3YoJ2Jhc2VsaW5lL2Jhc2VsaW5lX2ZyZXF1ZW5jeS5jc3YnKQoKIyBSZW1vdmluZyBpZCBjb2x1bW4sIGNoYW5naW5nIGNvbG5hbWVzIHRvIG51bWJlcnMgKGZvciBpbmRleGluZyBsYXRlciBvbiksCiMgY29udmVydGluZyB0byBtYXRyaXgKZGYgPC0gZGYgJT4lIHNlbGVjdCgtMSkgCm1hdCA8LSBhcy5tYXRyaXgoZGYpCgojIExvb3AgZm9yIHBvcHVsYXRpbmcgb3VyIGFkamFjZW5jeSBtYXRyaXgKYWRqLm1hdCA8LSBtYXRyaXgoMCwgbmNvbChtYXQpLCBuY29sKG1hdCkpCmZvciAoZG9jIGluIDE6bnJvdyhtYXQpKSB7CiAgZm9yIChpIGluIDE6bmNvbChtYXQpKSB7CiAgICBpZiAobWF0W2RvYywgaV0gIT0gMCkgewogICAgICBmb3IgKGogaW4gaSsxOmxlbmd0aChtYXRbZG9jLF0pKSB7CiAgICAgICAgIyBSIHN1Y2tzIGFuZCBpZiBpKzEgPT0gMTA5LCB0aGUgbG9vcCBndWFyZCBkb2Vzbid0IGNhcmUgYW5kIGl0IHdpbGwgCiAgICAgICAgIyBqdXN0IGNvdW50IGJhY2t3YXJkcyBkb3duIHRvIDEwOC4KICAgICAgICAjIFNvIHlvdSBuZWVkIHRoaXMgZXh0cmEgaWYgc3RhdGVtZW50LgogICAgICAgIGlmIChqIDwgMTA5KSB7CiAgICAgICAgICBpZiAobWF0W2RvYywgal0gIT0gMCkgewogICAgICAgICAgICBhZGoubWF0W2ksIGpdIDwtIDEKICAgICAgICAgICAgYWRqLm1hdFtqLCBpXSA8LSAxCiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9CiAgICB9CiAgfQp9CmBgYAoKYGBge3J9Cm4gPC0gbmV0d29yayhhZGoubWF0LCBkaXJlY3RlZD1GQUxTRSkKCiMgU2V0IGVhc3QgdnMuIHdlc3QgYXR0cmlidXRlIGZvciBlYWNoIG5vZGUKbmFtZXMgPC0gcmVhZC5jc3YoJ25hbWVzX2NvcHkuY3N2JykKbmFtZXMuZmlsdGVyZWQgPC0gbmFtZXNbIWR1cGxpY2F0ZWQobmFtZXNbLGMoJ2xhc3RuYW1lJyldKSxdWzE6MTA4LF0KCiMgIyBDaGVja2luZyB0aGF0IG5hbWVzIGFyZSBpbiBzYW1lIG9yZGVyIGluIGJvdGggdmVjdG9ycwojIHRvbG93ZXIobmFtZXMuZmlsdGVyZWRbLCdsYXN0bmFtZSddKQojIG5ldHdvcmsudmVydGV4Lm5hbWVzKG4pCiMgdG9sb3dlcihuZXR3b3JrLnZlcnRleC5uYW1lcyhuKSkgPT0gdG9sb3dlcihuYW1lcy5maWx0ZXJlZFssJ2xhc3RuYW1lJ10pCgpuYW1lcy5maWx0ZXJlZFssJ2FmZmlsaWF0aW9uJ10KCm4ldiUndmVydGV4Lm5hbWVzJzwtIGNvbG5hbWVzKGRmKQpuJXYlJ2FmZmlsaWF0aW9uJzwtIG5hbWVzLmZpbHRlcmVkWywnYWZmaWxpYXRpb24nXQojIG5ldHdvcmsudmVydGV4Lm5hbWVzKG4pCiMgcGxvdChuKQpgYGAKCiMjIE1vZGVsIDE6IE51bGwgbW9kZWwKCmBgYHtyfQojIE5VTEwgTU9ERUwKIyBFc3RpbWF0ZSB0aGUgc2ltcGxlc3QgbW9kZWwsIG9uZSB3aXRoIG9ubHkgYSB0ZXJtIGZvciB0aWUgZGVuc2l0eSAoYWtpbiB0byBhbiBpbnRlcmNlcHQgdGVybSBpbiBhIGdsbSkKbnVsbC5tb2RlbCA9IGVyZ20obiB+IGVkZ2VzKQpzdW1tYXJ5KG51bGwubW9kZWwpCmBgYAoKVGhlIGNvbmRpdGlvbmFsIGxvZy1vZGRzIG9mIHR3byBhY3RvcnMgaGF2aW5nIGEgdGllLCBrZWVwaW5nIHRoZSByZXN0IG9mIHRoZSBuZXR3b3JrIGZpeGVkLCBpcyAtMi45MzMyICogY2hhbmdlIGluIHRoZSBudW1iZXIgb2YgdGllcy4KCiMjIE1vZGVsIDI6IFRyaWFkIE1vZGVsCgpMZXTigJlzIGFkZCBhIHRlcm0gb2Z0ZW4gdGhvdWdodCB0byBiZSBhIG1lYXN1cmUgb2Yg4oCcY2x1c3RlcmluZ+KAnTogdGhlIG51bWJlciBvZiBjb21wbGV0ZWQgdHJpYW5nbGVzIGluIHRoZSBuZXR3b3JrLgoKYGBge3J9CiMjIFRBS0VTIEZPUkVWRVIgVE8gUlVOLCBIQVZFIE5PIENMVUUgV0hBVCBUSEUgU1RBVFMgRk9SIFRISVMgT05FIEFSRQojbW9kZWwuMiA8LSBlcmdtKG4gfiBlZGdlcyArIGd3ZXNwKQojc3VtbWFyeShtb2RlbC4yKQo/ZXJnbS50ZXJtcwpgYGAKCiMjIE1vZGVsIDM6IEFmZmlsaWF0aW9uIChFYXN0IHZzLiBXZXN0KQoKYGBge3J9CiMgYWZmaWxpYXRpb24ubW9kZWwgPSBlcmdtKG4gfiBlZGdlcyArIG5vZGVtYXRjaCgnYWZmaWxpYXRpb24nLCBkaWZmPUZBTFNFLCBrZWVwPU5VTEwsIGxldmVscz1OVUxMKSkKYWZmaWxpYXRpb24ubW9kZWwgPSBlcmdtKG4gfiBlZGdlcyArIG5vZGVmYWN0b3IoJ2FmZmlsaWF0aW9uJywgYmFzZT0xLCBsZXZlbHM9LTEpIAogICAgICAgICAgICAgICAgICAgICAgICAgKyBub2RlbWF0Y2goJ2FmZmlsaWF0aW9uJywgZGlmZj1GQUxTRSwga2VlcD1OVUxMLCBsZXZlbHM9TlVMTCkpCgpzdW1tYXJ5KGFmZmlsaWF0aW9uLm1vZGVsKQpgYGAKClRoZSBjb25kaXRpb25hbCBsb2ctb2RkcyBvZiB0d28gYWN0b3JzIGhhdmluZyBhIHRpZSwga2VlcGluZyB0aGUgcmVzdCBvZiB0aGUgbmV0d29yayBmaXhlZCwgaXMgLTMuODk5NCAqIGNoYW5nZSBpbiB0aGUgbnVtYmVyIG9mIHRpZXMgKyAwLjE2MzgyIGlmIG5vZGUgaW4gcXVlc3Rpb24gaXMgYSB3ZXN0ZXJuZXIgKyAxLjMzODU5IGlmIGJvdGggbm9kZXMgc2hhcmUgdGhlIHNhbWUgYWZmaWxpYXRpb24uXAoKRE9VQkxFIENIRUNLIHNlbmQvcmVjZWl2ZSAtLSAuMzI/Cgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CiMgTGlicmFyaWVzCgojIGluc3RhbGwucGFja2FnZXMoaWdyYXBoKQojIGluc3RhbGwucGFja2FnZXMoJ3N0YXRuZXQnKQoKbGlicmFyeSh0aWR5dmVyc2UpCmxpYnJhcnkoaWdyYXBoKSAgICAjIEZvciBjcmVhdGluZyB0aGUgbmV0d29yawpsaWJyYXJ5KHN0YXRuZXQpICAgIyBGb3IgRVJHTQpgYGAKCmBgYHtyfQojIEJhc2VsaW5lIGRhdGFzZXQgcHJvdmlkZWQgYnkgdGhlIHByb2Zlc3NvciBvZiB3aGljaCBuYW1lcyBhcHBlYXIgaW4gd2hpY2ggZG9jdW1lbnQKIyBST1dTOiBkb2N1bWVudAojIENPTFM6IG5hbWVzCiMgICAgICAgLSAxIDogbmFtZSBhcHBlYXJlZCBpbiBkb2N1bWVudCBhdCB0aGF0IHJvdwojICAgICAgIC0gMCA6IG5hbWUgZGlkIG5vdCBhcHBlYXIgaW4gZG9jdW1lbnQgYXQgdGhhdCByb3cKZGYgPC0gcmVhZC5jc3YoJ2Jhc2VsaW5lL2Jhc2VsaW5lX2ZyZXF1ZW5jeS5jc3YnKQoKIyBSZW1vdmluZyBpZCBjb2x1bW4sIGNoYW5naW5nIGNvbG5hbWVzIHRvIG51bWJlcnMgKGZvciBpbmRleGluZyBsYXRlciBvbiksCiMgY29udmVydGluZyB0byBtYXRyaXgKZGYgPC0gZGYgJT4lIHNlbGVjdCgtMSkgCm1hdCA8LSBhcy5tYXRyaXgoZGYpCgojIExvb3AgZm9yIHBvcHVsYXRpbmcgb3VyIGFkamFjZW5jeSBtYXRyaXgKYWRqLm1hdCA8LSBtYXRyaXgoMCwgbmNvbChtYXQpLCBuY29sKG1hdCkpCmZvciAoZG9jIGluIDE6bnJvdyhtYXQpKSB7CiAgZm9yIChpIGluIDE6bmNvbChtYXQpKSB7CiAgICBpZiAobWF0W2RvYywgaV0gIT0gMCkgewogICAgICBmb3IgKGogaW4gaSsxOmxlbmd0aChtYXRbZG9jLF0pKSB7CiAgICAgICAgIyBSIHN1Y2tzIGFuZCBpZiBpKzEgPT0gMTA5LCB0aGUgbG9vcCBndWFyZCBkb2Vzbid0IGNhcmUgYW5kIGl0IHdpbGwgCiAgICAgICAgIyBqdXN0IGNvdW50IGJhY2t3YXJkcyBkb3duIHRvIDEwOC4KICAgICAgICAjIFNvIHlvdSBuZWVkIHRoaXMgZXh0cmEgaWYgc3RhdGVtZW50LgogICAgICAgIGlmIChqIDwgMTA5KSB7CiAgICAgICAgICBpZiAobWF0W2RvYywgal0gIT0gMCkgewogICAgICAgICAgICBhZGoubWF0W2ksIGpdIDwtIDEKICAgICAgICAgICAgYWRqLm1hdFtqLCBpXSA8LSAxCiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9CiAgICB9CiAgfQp9CmBgYAoKYGBge3J9Cm4gPC0gbmV0d29yayhhZGoubWF0LCBkaXJlY3RlZD1GQUxTRSkKCiMgU2V0IGVhc3QgdnMuIHdlc3QgYXR0cmlidXRlIGZvciBlYWNoIG5vZGUKbmFtZXMgPC0gcmVhZC5jc3YoJ25hbWVzLmNzdicpCm5hbWVzLmZpbHRlcmVkIDwtIG5hbWVzWyFkdXBsaWNhdGVkKG5hbWVzWyxjKCdsYXN0bmFtZScpXSksXVsxOjEwOCxdCm5hbWVzLmZpbHRlcmVkLnNvcnRlZCA8LSBuYW1lcy5maWx0ZXJlZFtvcmRlcihuYW1lcy5maWx0ZXJlZCRsYXN0bmFtZSksXQoKbmFtZXMuZmlsdGVyZWQuc29ydGVkCgojICMgQ2hlY2tpbmcgdGhhdCBuYW1lcyBhcmUgaW4gc2FtZSBvcmRlciBpbiBib3RoIHZlY3RvcnMKbiAldiUgJ3ZlcnRleC5uYW1lcyc8LSBzdHJfdG9fdGl0bGUoc29ydChuYW1lcy5maWx0ZXJlZC5zb3J0ZWRbJ2xhc3RuYW1lJ10pKQojbmV0d29yay52ZXJ0ZXgubmFtZXMoZykKCiNkZgojbmFtZXMKI25hbWVzLmZpbHRlcmVkWywnbGFzdG5hbWUnXQoKZm9yIChpIGluIDE6MTA4KSB7CiAgcHJpbnQocGFzdGUoaSwgcGFzdGUobmFtZXMuZmlsdGVyZWQuc29ydGVkW2ksJ2xhc3RuYW1lJ10sIGNvbG5hbWVzKGRmKVtpXSkpKSB9CgojbmFtZXMuZmlsdGVyZWRbLCdhZmZpbGlhdGlvbiddCgpuJXYlJ3ZlcnRleC5uYW1lcyc8LSBjb2xuYW1lcyhkZikKbiV2JSdhZmZpbGlhdGlvbic8LSBuYW1lcy5maWx0ZXJlZC5zb3J0ZWRbLCdhZmZpbGlhdGlvbiddCm4ldiUnREMnIDwtIG5hbWVzLmZpbHRlcmVkLnNvcnRlZFssJ0RDLlkuTi4nXQpuJXYlJ21lZGlhJyA8LSBuYW1lcy5maWx0ZXJlZC5zb3J0ZWRbLCdtZWRpYS5ZLk4uJ10KbiV2JSdwcml2YXRlJyA8LSBuYW1lcy5maWx0ZXJlZC5zb3J0ZWRbLCdwcml2YXRlLlkuTi4nXQoKIyBuZXR3b3JrLnZlcnRleC5uYW1lcyhuKQojIHBsb3QobikKYGBgCgojIyBNb2RlbCAxOiBOdWxsIG1vZGVsCgpgYGB7cn0KIyBOVUxMIE1PREVMCiMgRXN0aW1hdGUgdGhlIHNpbXBsZXN0IG1vZGVsLCBvbmUgd2l0aCBvbmx5IGEgdGVybSBmb3IgdGllIGRlbnNpdHkgKGFraW4gdG8gYW4gaW50ZXJjZXB0IHRlcm0gaW4gYSBnbG0pCm51bGwubW9kZWwgPSBlcmdtKG4gfiBlZGdlcykKc3VtbWFyeShudWxsLm1vZGVsKQpgYGAKClRoZSBjb25kaXRpb25hbCBsb2ctb2RkcyBvZiB0d28gYWN0b3JzIGhhdmluZyBhIHRpZSwga2VlcGluZyB0aGUgcmVzdCBvZiB0aGUgbmV0d29yayBmaXhlZCwgaXMgLTIuOTMzMiAqIGNoYW5nZSBpbiB0aGUgbnVtYmVyIG9mIHRpZXMuCgojIyBNb2RlbCAyOiBUcmlhZCBNb2RlbAoKTGV04oCZcyBhZGQgYSB0ZXJtIG9mdGVuIHRob3VnaHQgdG8gYmUgYSBtZWFzdXJlIG9mIOKAnGNsdXN0ZXJpbmfigJ06IHRoZSBudW1iZXIgb2YgY29tcGxldGVkIHRyaWFuZ2xlcyBpbiB0aGUgbmV0d29yay4KCmBgYHtyfQojIyBUQUtFUyBGT1JFVkVSIFRPIFJVTiwgSEFWRSBOTyBDTFVFIFdIQVQgVEhFIFNUQVRTIEZPUiBUSElTIE9ORSBBUkUKI21vZGVsLjIgPC0gZXJnbShuIH4gZWRnZXMgKyBnd2VzcCkKI3N1bW1hcnkobW9kZWwuMikKP2VyZ20udGVybXMKYGBgCgojIyBNb2RlbCAzOiBBZmZpbGlhdGlvbiAoRWFzdCB2cy4gV2VzdCkKCmBgYHtyfQojIGFmZmlsaWF0aW9uLm1vZGVsID0gZXJnbShuIH4gZWRnZXMgKyBub2RlbWF0Y2goJ2FmZmlsaWF0aW9uJywgZGlmZj1GQUxTRSwga2VlcD1OVUxMLCBsZXZlbHM9TlVMTCkpCmFmZmlsaWF0aW9uLm1vZGVsID0gZXJnbShuIH4gZWRnZXMgKyBub2RlZmFjdG9yKCdhZmZpbGlhdGlvbicsIGJhc2U9MSwgbGV2ZWxzPS0xKSAKICAgICAgICAgICAgICAgICAgICAgICAgICsgbm9kZW1hdGNoKCdhZmZpbGlhdGlvbicsIGRpZmY9RkFMU0UsIGtlZXA9TlVMTCwgbGV2ZWxzPU5VTEwpKQoKc3VtbWFyeShhZmZpbGlhdGlvbi5tb2RlbCkKYGBgCgpUaGUgY29uZGl0aW9uYWwgbG9nLW9kZHMgb2YgdHdvIGFjdG9ycyBoYXZpbmcgYSB0aWUsIGtlZXBpbmcgdGhlIHJlc3Qgb2YgdGhlIG5ldHdvcmsgZml4ZWQsIGlzIC0zLjg5OTQgKiBjaGFuZ2UgaW4gdGhlIG51bWJlciBvZiB0aWVzICsgMC4xNjM4MiBpZiBub2RlIGluIHF1ZXN0aW9uIGlzIGEgd2VzdGVybmVyICsgMS4zMzg1OSBpZiBib3RoIG5vZGVzIHNoYXJlIHRoZSBzYW1lIGFmZmlsaWF0aW9uLlwKCkRPVUJMRSBDSEVDSyBzZW5kL3JlY2VpdmUgLS0gLjMyPwoKYGBge3J9CiMgYWZmaWxpYXRpb24ubW9kZWwgPSBlcmdtKG4gfiBlZGdlcyArIG5vZGVtYXRjaCgnYWZmaWxpYXRpb24nLCBkaWZmPUZBTFNFLCBrZWVwPU5VTEwsIGxldmVscz1OVUxMKSkKYWZmaWxpYXRpb24ubW9kZWwgPSBlcmdtKG4gfiBlZGdlcyArIG5vZGVmYWN0b3IoJ0RDJywgYmFzZT0xLCBsZXZlbHM9LTEpKQoKc3VtbWFyeShhZmZpbGlhdGlvbi5tb2RlbCkKYGBgCgpgYGB7cn0KIyBhZmZpbGlhdGlvbi5tb2RlbCA9IGVyZ20obiB+IGVkZ2VzICsgbm9kZW1hdGNoKCdhZmZpbGlhdGlvbicsIGRpZmY9RkFMU0UsIGtlZXA9TlVMTCwgbGV2ZWxzPU5VTEwpKQphZmZpbGlhdGlvbi5tb2RlbCA9IGVyZ20obiB+IGVkZ2VzICsgbm9kZWZhY3RvcignREMnLCBiYXNlPTEsIGxldmVscz0tMSkpCgpzdW1tYXJ5KGFmZmlsaWF0aW9uLm1vZGVsKQpgYGAKCmBgYHtyfQojIGFmZmlsaWF0aW9uLm1vZGVsID0gZXJnbShuIH4gZWRnZXMgKyBub2RlbWF0Y2goJ2FmZmlsaWF0aW9uJywgZGlmZj1GQUxTRSwga2VlcD1OVUxMLCBsZXZlbHM9TlVMTCkpCmFmZmlsaWF0aW9uLm1vZGVsID0gZXJnbShuIH4gZWRnZXMgKyBub2RlZmFjdG9yKCdtZWRpYScsIGJhc2U9MSwgbGV2ZWxzPS0xKSkKCnN1bW1hcnkoYWZmaWxpYXRpb24ubW9kZWwpCmBgYAoKCmBgYHtyfQojIGFmZmlsaWF0aW9uLm1vZGVsID0gZXJnbShuIH4gZWRnZXMgKyBub2RlbWF0Y2goJ2FmZmlsaWF0aW9uJywgZGlmZj1GQUxTRSwga2VlcD1OVUxMLCBsZXZlbHM9TlVMTCkpCmFmZmlsaWF0aW9uLm1vZGVsID0gZXJnbShuIH4gZWRnZXMgKyBub2RlZmFjdG9yKCdwcml2YXRlJywgYmFzZT0xLCBsZXZlbHM9LTEpKQoKc3VtbWFyeShhZmZpbGlhdGlvbi5tb2RlbCkKYGBgCg==</div>
 
 
 
